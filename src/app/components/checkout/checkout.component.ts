@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country } from 'src/app/common/country';
 import { EcommerceFormService } from 'src/app/services/ecommerce-form.service';
 
 @Component({
@@ -17,6 +18,8 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+
+  countries: Country[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private ecommerceFormService: EcommerceFormService) { }
@@ -69,6 +72,13 @@ export class CheckoutComponent implements OnInit {
       }
     );
     
+    //populate countries
+    this.ecommerceFormService.getCountries().subscribe(
+      data => {
+        console.log("Retrieved countries: "+JSON.stringify(data));
+        this.countries = data;
+      }
+    );
   }
 
   onSubmit() {
